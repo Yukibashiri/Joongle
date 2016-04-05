@@ -58,7 +58,7 @@ void pesquisar_id(){
             printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
         }
 }
-//PESQUISAR POR CIDADE ESPECIFICO//
+//PESQUISAR POR PALAVRA CHAVE E FILTRAR O TIPO DE RESULTADO.//
 void pesquisar_keyword(){
     int i,filtro,resultados_encontrados=0;
     char pesquisa[60];
