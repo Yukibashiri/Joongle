@@ -1,18 +1,15 @@
 #include "joongle_db.h"
 
+//APRESENTAÇÂO DO CASE//
 void info(){
    system("cls");
    printf ("\n\nCASE: %s  \nAluno: %s \nProfessor: %s \n\n\n",caso,aluno,professor);  // Titulo do programa
-   return;
 }
-
-void main (void)
-{
-    setlocale(LC_ALL,"Portuguese");
-    int decisao,id;
-    int i,j;
+//MONTA UMA BASE DE DADOS//
+void db_example(){
+    int i;
     /////////////IDENTIFICADORES//////////////////
-    for (i=0; i<15; i++){
+        for (i=0; i<15; i++){
         Reg_Hoteis[i].identificador = i+1000;
     }
     /////////////DESCRICOES OU NOMES DOS HOTEIS//////////////////
@@ -47,47 +44,73 @@ void main (void)
     strcpy(Reg_Hoteis[12].cidade, "Phoenix");
     strcpy(Reg_Hoteis[13].cidade, "Barcelona");
     strcpy(Reg_Hoteis[14].cidade, "Calcutá");
+}
+//PESQUISA PELO ID FORNECIDO PELO USUARIO//
+void pesquisar_id(){
+    int i,id;
+    printf ("\n Informe o ID do Hotel (começando por 1000): ");
+    scanf ("%d",&id);
+    i = id - 1000;
+        if (id <1000 || Reg_Hoteis[i].identificador != id){
+            printf ("ID informado inexistente!\n");
+        }
+        else{
+            printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
+        }
+}
+//PESQUISAR POR CIDADE ESPECIFICO//
+void pesquisar_city(){
+    int i;
+    char pesquisa[60];
+    printf ("\n Pesquisar por:  ");
+    gets(pesquisa);
+    for (i=0;i<15;i++){
+        if (0 == stricmp(Reg_Hoteis[i].descricao,pesquisa) || 0 ==stricmp(Reg_Hoteis[i].cidade,pesquisa)){
+            printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
+        }
+    }
+}
+//PESQUISA POR PALAVRA CHAVE //
+void pesquisar_keyword(){
+    int i;
+    char pesquisa[40];
+    printf ("\n Pesquisar por:  ");
+    gets(pesquisa);
+    for (i=0;i<15;i++){
+        if (strstr(Reg_Hoteis[i].descricao,pesquisa) != NULL)||strstr(Reg_Hoteis[i].cidade,pesquisa) != NULL)){
+            printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
+        }
+    }
+}
+
+// FUNÇÃO PRINCIPAL//
+void main (void)
+{
+    setlocale(LC_ALL,"Portuguese");
+    db_example();
+    int decisao,id;
+    int i;
     char pesquisa[50];
     do{
         printf ("\n           JOONGLE! SEARCHER     \n");
         printf (" ____________________________________\n");
         printf ("|                                    | \n");
         printf ("|   [1] BUSCA POR IDENTIFICADOR      |\n");
-        printf ("|   [2] BUSCA POR PALAVRA CHAVE      |\n");
-        printf ("|   [3] BUSCA AVANÇADA               |\n");
+        printf ("|   [2] BUSCA POR CIDADE             |\n");
+        printf ("|   [3] BUSCA POR PALAVRA CHAVE      |\n");
         printf ("|   [4] INFO                         |\n");
         printf ("|   [ESC] ENCERRAR PROGRAMA          |\n|____________________________________|\nPressione a tecla no teclado referente ao numero do menu.");
         decisao = getch();
         system("cls");
         switch(decisao){
             case 49:
-                printf ("\n Informe o ID do Hotel (começando por 1000): ");
-                scanf ("%d",&id);
-                i = id - 1000;
-                if (id <1000 || Reg_Hoteis[i].identificador != id){
-                    printf ("ID informado inexistente!\n");
-                }
-                else{
-                    printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
-                }
+                pesquisar_id();
                 break;
             case 50:
-                printf ("\n Pesquisar por:  ");
-                gets(pesquisa);
-                for (i=0;i<15;i++){
-                    if (0 == stricmp(Reg_Hoteis[i].descricao,pesquisa) || 0 ==stricmp(Reg_Hoteis[i].cidade,pesquisa)){
-                        printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
-                    }
-                }
+                pesquisar_city();
                 break;
             case 51:
-                printf ("\n Pesquisar por:  ");
-                gets(pesquisa);
-                for (i=0;i<15;i++){
-                    if (strstr(Reg_Hoteis[i].descricao,pesquisa) != NULL){
-                        printf ("\n ID: %d.\n Descrição:  %s.\n Cidade:  %s.\n\n",Reg_Hoteis[i].identificador,Reg_Hoteis[i].descricao,Reg_Hoteis[i].cidade);
-                    }
-                }
+                pesquisar_keyword();
                 break;
             case 52:
                 info();
@@ -97,5 +120,6 @@ void main (void)
                 break;
         }
         system("PAUSE");
+        system("cls");
     }while (decisao != 0x1b);
 }
