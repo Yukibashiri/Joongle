@@ -59,7 +59,7 @@ void pesquisar_id(){
         }
 }
 //PESQUISAR POR CIDADE ESPECIFICO//
-void pesquisar_city(){
+void pesquisar_keyword(){
     int i,filtro,resultados_encontrados=0;
     char pesquisa[60];
     do{
